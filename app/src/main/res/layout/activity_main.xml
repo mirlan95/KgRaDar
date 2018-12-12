@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        tools:context=".views.MainActivity"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+       >
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|top"
+            android:src="@drawable/ic_menu_black_24dp"
+            android:padding="8dp"
+            android:id="@+id/menuBtn"
+            android:background="@drawable/button_corner"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="60dp"
+            />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/police_location"
+                android:layout_weight="1"
+                android:background="@drawable/button_corner"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="15dp"
+                android:id="@+id/addLocationBtn"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/out_app_text"
+                android:background="@drawable/button_corner"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="15dp"
+                android:id="@+id/back"/>
+    </LinearLayout>
+
+</fragment>

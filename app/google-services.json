@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1023018520687",
+    "firebase_url": "https://kgradar-6dafa.firebaseio.com",
+    "project_id": "kgradar-6dafa",
+    "storage_bucket": "kgradar-6dafa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023018520687:android:eab04624c3db0292",
+        "android_client_info": {
+          "package_name": "com.example.mirlan.kgradar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1023018520687-ij6n8o7ksq7ntfvoli84srlf2i9u96fs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mirlan.kgradar",
+            "certificate_hash": "527b7636c83ff3c11cf80419bd0bce6a07c9a3b0"
+          }
+        },
+        {
+          "client_id": "1023018520687-172mef5ue559t4kficg14vnfomgoavvp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfhVuLcsSrqqEJD39IdzV9eJcygGxRYT0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1023018520687-172mef5ue559t4kficg14vnfomgoavvp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

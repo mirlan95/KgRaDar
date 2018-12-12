@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">KgRaDar</string>
+    <string name="police_location">Гаи</string>
+    <string name="out_app_text">выйти</string>
+    <string name="authentication_label">Authentication with Firebase</string>
+    <string name="create_room_label">Create room</string>
+    <string name="success_message_authentication">Authentication is successful</string>
+    <string name="text_waiting_for_auth">Authenticating, this may take 1 minute</string>
+    <string name="send_text">Send</string>
+    <string name="text_submit">Submit</string>
+    <string name="existing_room_label">Enter existing</string>
+    <string name="location">Location permission is required to run the demo</string>
+</resources>
