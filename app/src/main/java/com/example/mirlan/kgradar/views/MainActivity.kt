@@ -24,11 +24,13 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import com.example.mirlan.kgradar.data.model.PoliceLocation
 import com.example.mirlan.kgradar.viewModel.MapViewModel
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.VisibleRegion
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
@@ -40,6 +42,7 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback,GoogleMap.OnMyLocati
 
     private var mAuth:FirebaseAuth?=null
     private lateinit var mMap: GoogleMap
+    private var mDatabase: DatabaseReference? = null
     private var status:Int = 0
 
     private val viewModel: MapViewModel by lazy {
@@ -57,7 +60,7 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback,GoogleMap.OnMyLocati
         mAuth = FirebaseAuth.getInstance()
         signInAnonymously()
         initMap()
-        getAllLocations()
+
 
         menuBtn.setOnClickListener {
             showMenu()
@@ -92,13 +95,13 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback,GoogleMap.OnMyLocati
 
     override fun onMapReady(mGoogleMap: GoogleMap?) {
         mMap = mGoogleMap!!
-        //val sydney = LatLng(42.85, 74.85)
-        //drawMarker(sydney,"HELLO","mirlan")
+        getAllLocations()
+
       //for enabling location
 
         enableMyLocation()
         mMap.apply {
-            //uiSettings.isMyLocationButtonEnabled = true
+            uiSettings.isMyLocationButtonEnabled = true
             uiSettings.isCompassEnabled = true
             mapType = GoogleMap.MAP_TYPE_NORMAL
             uiSettings.isZoomControlsEnabled = true
@@ -177,6 +180,7 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback,GoogleMap.OnMyLocati
         })
     }
     private fun getAllLocations(){
+        Toast.makeText(this@MainActivity,"hi",Toast.LENGTH_LONG).show()
         viewModel.getPoliceLocations()?.observe(this, Observer{
             it?.forEach {
                 val marker = LatLng(it.lat,it.lng)
@@ -184,6 +188,25 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback,GoogleMap.OnMyLocati
                 Toast.makeText(this,"hi" + it.lat,Toast.LENGTH_LONG).show()
             }
         })
+        /*mDatabase = FirebaseDatabase.getInstance().reference.child("locations")
+        val locationsListener = object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                //val location = dataSnapshot.getValue(PoliceLocation::class.java)
+                //val marker = LatLng(location!!.lat,location.lng)
+               // drawMarker(marker,location.toString()," ")
+               dataSnapshot.children.forEach {
+                    val location = it.getValue(PoliceLocation::class.java)
+                    val marker = LatLng(location!!.lat,location.lng)
+                    drawMarker(marker, location.likes[1.toString()].toString()," ")
+                }
+             //   Toast.makeText(this@MainActivity,"hi"+location?.id,Toast.LENGTH_LONG).show()
+            }}*/
+
+       // mDatabase?.addValueEventListener(locationsListener)
     }
     private fun drawMarker(latLng: LatLng, title: String, snippet: String) {
         val markerOptions = MarkerOptions()
@@ -192,7 +215,7 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback,GoogleMap.OnMyLocati
             .position(latLng)
             .snippet(snippet)
         mMap.addMarker(markerOptions)
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(13F), 5000,null)
+       // mMap.animateCamera(CameraUpdateFactory.zoomTo(20F), 5000,null)
 
     }
     override fun onMyLocationClick(location: Location) {

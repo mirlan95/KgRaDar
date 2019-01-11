@@ -12,34 +12,37 @@ import com.google.firebase.firestore.DocumentReference
 
 class MapViewModel : ViewModel() {
 
-    private var policeLocationList: MutableLiveData<List<PoliceLocation>>? = null
+    private var policeLocationList: MutableLiveData<MutableList<PoliceLocation>>? = null
     private var mDatabase: DatabaseReference? = null
 
-    fun getPoliceLocations(): MutableLiveData<List<PoliceLocation>>? {
+    fun getPoliceLocations(): MutableLiveData<MutableList<PoliceLocation>>? {
         if (policeLocationList == null) {
-            policeLocationList = MutableLiveData<List<PoliceLocation>>()
+            policeLocationList = MutableLiveData<MutableList<PoliceLocation>>()
             loadLocations()
-           //
-           // val myRef = database.getReference("Locations")
         }
-
         return policeLocationList
     }
 
     private fun loadLocations() {
-        //val police = PoliceLocation.create()
-        mDatabase = FirebaseDatabase.getInstance().reference.child("locations")
 
-        val newloc = mDatabase!!.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(p0: DataSnapshot) {
-                for (datasnapshot in p0.children){
-                    //policeLocationList
-                }
-            }
+        mDatabase = FirebaseDatabase.getInstance().reference.child("locations")
+        val locationsListener = object :ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
 
             }
-        })
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                ///val location = dataSnapshot.getValue(PoliceLocation::class.java) ?: return
+                var location:PoliceLocation?=null
+                dataSnapshot.children.forEach {
+                     location = it.getValue(PoliceLocation::class.java)
+                }
+                policeLocationList?.value?.add(location!!)
+
+            }
+
+        }
+        mDatabase!!.addValueEventListener(locationsListener)
 
     }
     fun save(lat: Double, lng: Double, like: Int){
@@ -47,7 +50,8 @@ class MapViewModel : ViewModel() {
         mDatabase = FirebaseDatabase.getInstance().reference
         val newLocation = mDatabase!!.child(FIREBASE_PATH).push()
         val userLike = newLocation.child(FIREBASE_LIKE).push()//child(newLocation.key.toString()).push()
-        val police = PoliceLocation.create()
+//        val police = PoliceLocation.create()
+        val police =  PoliceLocation()
         police.lat = lat
         police.lng = lng
         police.userId = newLocation.key
